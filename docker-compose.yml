@@ -1,0 +1,37 @@
+version: "2"
+services:
+  app-isamm:
+    container_name: app-isamm
+    build: .
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    links:
+      - db-isamm
+    depends_on:
+      - db-isamm
+    volumes:
+      - ./:/usr/app/
+      - /usr/app/node_modules
+    
+
+  db-isamm:
+    container_name: db-isamm
+    image: mongo
+    volumes:
+      - mongo:/data/db
+    ports:
+      - '27018:27017'
+
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    ports:
+      - "8081:8081"
+    links:
+      - db-isamm
+    environment:
+      - ME_CONFIG_MONGODB_URL=mongodb://db-isamm:27017
+
+volumes:
+  mongo:
