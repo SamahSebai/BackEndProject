@@ -54,19 +54,43 @@ exports.forgetpassword = async (req, res) => {
    * 
    * 
    */
-  exports.resetPassword = async (req, res) => {
-    try {
-      const token = await Token.findOne({ token: req.params.token })
-      console.log(token.userId);
-      if (token) {
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(req.body.password, salt);
-        await Compte.findByIdAndUpdate(token.userId, { password: req.body.password, passwordHashed: hash }, { new: true })
-        res.status(200).send({ message: 'password updated' })
-      } else {
-        res.status(400).send({ message: 'token invalid' })
-      }
-    } catch (error) {
-      res.status(500).send({ message: error.message || "An error occured" });
+ exports.resetPassword = async (req, res) => {
+  try {
+    const token = await Token.findOne({ token: req.params.token });
+    if (!token) {
+      // If no token is found, return an error response
+      return res.status(400).send({ message: 'Token invalid' });
     }
+
+    // If a valid token is found, update the user's password
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(req.body.password, salt);
+    await Compte.findByIdAndUpdate(token.userId, {
+      password: req.body.password,
+      passwordHashed: hash,
+    });
+
+    // Send a success response
+    res.status(200).send({ message: 'Password updated' });
+  } catch (error) {
+    // Catch any unexpected errors and send a generic error response
+    res.status(500).send({ message: 'An error occurred' });
   }
+}
+
+exports.UpdateUser = async (req, res) => {
+  try {
+    const salt = bcrypt.genSaltSync(10);
+    req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
+    const Result = await Accounts.findByIdAndUpdate(req.params.iduser, req.body);
+    const Resultupdate = await Accounts.findById(req.params.iduser);
+    res.send(Resultupdate);
+  } catch (error) {
+    res.status(500).send({ message: error.message || "An error occurred" });
+  }
+};
+
+
+;
+
+
