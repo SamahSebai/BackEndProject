@@ -14,6 +14,7 @@ const AccountSchema = new Schema(
         categorie: { type: String },
         classe: { type: String },
         visibilite:{type:Boolean, default : false},
+	etat:{type:Boolean, default : false},
         role: {
             type: String,
             enum: ["ADMIN", "Etudiant", "Enseignant", "ALumni"],
@@ -27,6 +28,7 @@ const AccountSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "Cv",
         },
+	
         diplome : {
             type: Boolean,
            
