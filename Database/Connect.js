@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', true);
-mongoose.connect("mongodb+srv://samehsebai0104:aY23QVpW1WgXiyPh@cluster0.dfvbix0.mongodb.net/?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://reactisamm2023:reactisamm@clusterreact.woxc9mp.mongodb.net/?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     
     useUnifiedTopology: true,
