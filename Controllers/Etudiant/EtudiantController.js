@@ -55,7 +55,7 @@ exports.UpdateEtudiant = async (req, res) => {
 
     try {
        // const salt = bcrypt.genSaltSync(10);
-        //req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
+        // req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
         const Result = await Etudiant.findByIdAndUpdate(req.params.idEtudiant, req.body)
 
         const Resultupdate = await Etudiant.findById(req.params.idEtudiant)
@@ -107,8 +107,8 @@ exports.DeleteEtudiant = async (req, res) => {
 
 exports.uploadStudents = (req, res) => {
    
-    // Connect to the MongoDB database
-    // Create a new instance of the ExcelJS Workbook
+ //Connect to the MongoDB database
+ // Create a new instance of the ExcelJS Workbook
     const workbook = new Excel.Workbook();
     // Read the data from the Excel file using the buffer
     workbook.xlsx.load(req.files[0].buffer)
