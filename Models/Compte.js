@@ -13,6 +13,8 @@ const AccountSchema = new Schema(
         Specialite: { type: String },
         categorie: { type: String },
         classe: { type: String },
+	    niveau: { type: String },
+    datedeNaissance: { type: String },
         visibilite:{type:Boolean, default : false},
 	etat:{type:Boolean, default : false},
         role: {
