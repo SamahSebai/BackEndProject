@@ -54,8 +54,8 @@ exports.FetchEtudiantPublic = async (req, res) => {
 exports.UpdateEtudiant = async (req, res) => {
 
     try {
-        const salt = bcrypt.genSaltSync(10);
-        req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
+       // const salt = bcrypt.genSaltSync(10);
+        //req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
         const Result = await Etudiant.findByIdAndUpdate(req.params.idEtudiant, req.body)
 
         const Resultupdate = await Etudiant.findById(req.params.idEtudiant)
