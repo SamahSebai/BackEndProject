@@ -1,26 +1,24 @@
-const Accounts = require('../../Models/Compte')
+const Accounts = require("../../Models/Compte");
 const nodemailer = require("nodemailer");
-const bcrypt = require('bcryptjs');
- 
+const bcrypt = require("bcryptjs");
+
 exports.register = async (req, res) => {
   try {
-    const Found = await Accounts.findOne({ email: req.body.email })
+    const Found = await Accounts.findOne({ email: req.body.email });
     if (Found !== null) {
-      res.status(400).send({ message: 'E-mail déjà utilisé!' });
-    }
-    else {
+      res.status(400).send({ message: "E-mail déjà utilisé!" });
+    } else {
       const salt = bcrypt.genSaltSync(10);
       req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
       let transporter = nodemailer.createTransport({
-      service :"Gmail",
+        service: "Gmail",
         auth: {
           user: "sebaisameh51@gmail.com",
-          pass: "kashplocvadlnwnk" ,
-
+          pass: "kashplocvadlnwnk",
         },
       });
       await transporter.sendMail({
-        from:"wajdi.barhoumi26@gmail.com",
+        from: "wajdi.barhoumi26@gmail.com",
         to: `${req.body.email}`,
         subject: "Inscription",
         html: `<h1>Thanks For Joining Us!</h1> 
@@ -35,13 +33,13 @@ exports.register = async (req, res) => {
         By DEVILS TEAM<br>
         Manager of Academia .
         
-        `
-      })
-      await Accounts.create(req.body)
-      res.status(201).send({ message: 'Inscrit avec succés!' })
+        `,
+      });
+      console.log(req.body);
+      await Accounts.create(req.body);
+      res.status(201).send({ message: "Inscrit avec succés!" });
     }
   } catch (error) {
     res.status(500).send({ message: error.message || "An error occured" });
   }
-
-}
+};

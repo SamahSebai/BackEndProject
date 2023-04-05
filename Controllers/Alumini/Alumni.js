@@ -1,74 +1,46 @@
-const Alumni = require('../../Models/Compte')
+const Alumni = require("../../Models/Compte");
 
+exports.FetchAlumni = async (req, res) => {
+  try {
+    const Result = await Alumni.find({ role: "ALumni" });
 
-exports.FetchAlumni = async (req , res)=>{
+    res.send(Result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
-try {
-    
-const Result = await Alumni.find({role : "Alumni"})
+exports.FetchAlumniById = async (req, res) => {
+  try {
+    const Result = await Alumni.findById(req.params.idAlumni);
 
-res.send(Result)
+    res.send(Result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
+exports.UpdateAlumni = async (req, res) => {
+  try {
+    const salt = bcrypt.genSaltSync(10);
+    req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
+    await Alumni.findByIdAndUpdate(req.params.idAlmuni, req.body);
 
-} catch (error) {
+    const Resultupdate = await Alumni.findById(req.params.idAlumni);
 
-    res.status(500).send(error)
-}
+    res.send(Resultupdate);
+  } catch (error) {
+    res.status(500).send(error);
+    console.log(error);
+  }
+};
 
-}
+exports.DeleteAlumni = async (req, res) => {
+  try {
+    const Result = await Alumni.findByIdAndDelete(req.params.idAlumni);
 
-
-exports.FetchAlumniById = async (req , res)=>{
-
-    try {
-        
-    const Result = await Alumni.findById(req.params.idAlumni)
-    
-    res.send(Result)
-    
-    
-    } catch (error) {
-    
-        res.status(500).send(error)
-    }
-    
-    }
-
-    exports.UpdateAlumni= async (req , res)=>{
-
-        try {
-            const salt = bcrypt.genSaltSync(10);
-            req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
-            await Alumni.findByIdAndUpdate(req.params.idAlmuni , req.body)
-
-        const Resultupdate = await Alumni.findById(req.params.idAlumni)
-        
-        res.send(Resultupdate)
-        
-        
-        } catch (error) {
-        
-            res.status(500).send(error)
-            console.log(error)
-        }
-        
-        }
-
-
-        
-
-
-        exports.DeleteAlumni = async (req , res )=>
-        {
-            try {
-
-                const Result = await Alumni.findByIdAndDelete(req.params.idAlumni) 
-
-                
-                res.status(200).send('Alumni deleted with success')
-            } catch (error) {
-                
-
-                res.status(500).send('error serveur')
-            }
-        }
+    res.status(200).send("Alumni deleted with success");
+  } catch (error) {
+    res.status(500).send("error serveur");
+  }
+};
