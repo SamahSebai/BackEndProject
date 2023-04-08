@@ -1,4 +1,5 @@
 const Accounts = require("../../Models/Compte");
+const CvModule = require("../../Models/Cv");
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcryptjs");
 
@@ -6,7 +7,7 @@ exports.register = async (req, res) => {
   try {
     const Found = await Accounts.findOne({ email: req.body.email });
     if (Found !== null) {
-      res.status(400).send({ message: "E-mail déjà utilisé!" });
+      return res.status(400).send({ message: "E-mail déjà utilisé!" });
     } else {
       const salt = bcrypt.genSaltSync(10);
       req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
@@ -35,11 +36,23 @@ exports.register = async (req, res) => {
         
         `,
       });
-      console.log(req.body);
-      await Accounts.create(req.body);
+      const newAcc=await new Accounts(req.body);
+      const savedacc= await newAcc.save();
+      if(savedacc.role==="Etudiant" || savedacc.role==="ALumni"){
+        const emptyCv=initcv(savedacc._id);
+        const newCv = await new CvModule(emptyCv);
+        const savedCv =await newCv.save();
+      }
       res.status(201).send({ message: "Inscrit avec succés!" });
+
+
     }
   } catch (error) {
     res.status(500).send({ message: error.message || "An error occured" });
   }
 };
+
+
+const initcv=(student_id)=>{
+  return {compte:student_id,description:"",linkedInUrl:"",githubUrl:"",experiences:[],Education:[],certifications:[],languages:[],hard_skills:[],soft_skills:[],hobbys:[]};
+}
