@@ -36,23 +36,63 @@ exports.register = async (req, res) => {
         
         `,
       });
-      const newAcc=await new Accounts(req.body);
-      const savedacc= await newAcc.save();
-      if(savedacc.role==="Etudiant" || savedacc.role==="ALumni"){
-        const emptyCv=initcv(savedacc._id);
+      const newAcc = await new Accounts(req.body);
+      const savedacc = await newAcc.save();
+      if (savedacc.role === "Etudiant" || savedacc.role === "ALumni") {
+        const emptyCv = initcv(savedacc._id);
         const newCv = await new CvModule(emptyCv);
-        const savedCv =await newCv.save();
+        const savedCv = await newCv.save();
       }
       res.status(201).send({ message: "Inscrit avec succés!" });
-
-
     }
   } catch (error) {
+    console.log(error);
     res.status(500).send({ message: error.message || "An error occured" });
   }
 };
 
-
-const initcv=(student_id)=>{
-  return {compte:student_id,description:"",linkedInUrl:"",githubUrl:"",experiences:[],Education:[],certifications:[],languages:[],hard_skills:[],soft_skills:[],hobbys:[]};
-}
+const initcv = (student_id) => {
+  return {
+    compte: student_id,
+    description: "",
+    linkedInUrl: "",
+    githubUrl: "",
+    type_cv: 1,
+    experiences: [
+      {
+        titre: "",
+        description: "",
+        technologies: "",
+        nom_societe: "",
+        type_exp: "STAGE D'ETE",
+        emplacement: "",
+        dateDebut: new Date(),
+        dateFin: new Date(),
+      },
+    ],
+    Education: [
+      {
+        titre_univ: "",
+        titre_diplome: "",
+        mention: "Passable",
+        description: "",
+        dateDebut: new Date(),
+        dateFin: new Date(),
+      },
+    ],
+    certifications: [
+      {
+        titre_certif: "",
+        source_certif: "",
+        description: "",
+        emplacement: "",
+        dateDebut: new Date(),
+        dateFin: new Date(),
+      },
+    ],
+    languages: [{ lang: "", level: "" }],
+    hard_skills: [""],
+    soft_skills: [""],
+    hobbys: [""],
+  };
+};
