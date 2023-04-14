@@ -26,11 +26,6 @@ const AccountSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Saison",
     },
-    Cv: {
-      type: Schema.Types.ObjectId,
-      ref: "Cv",
-    },
-
     diplome: {
       type: Boolean,
 

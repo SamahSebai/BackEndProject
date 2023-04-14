@@ -1,4 +1,4 @@
-const Etudiant = require("../../Models/Compte");
+const Etudiant = require("../../Models/Compte"); 
 const bcrypt = require("bcryptjs");
 const Excel = require("exceljs");
 
