@@ -10,13 +10,16 @@ const AccountSchema = new Schema(
     password: { type: String, required: [true, "Mot de passe obligatoire!"] },
     passwordHashed: { type: String, required: true },
     address: { type: String },
+    pays: { type: String },
+    société: { type: String },
+    promotion: { type: String },
     Specialite: { type: String },
     niveau: { type: String },
     datedeNaissance: { type: String },
     categorie: { type: String },
     classe: { type: String },
     visibilite: { type: Boolean, default: false },
-    etat: { type: Boolean, default: false },
+    etat: { type: Boolean, default: null },
     role: {
       type: String,
       enum: ["ADMIN", "Etudiant", "Enseignant", "ALumni"],
@@ -28,9 +31,11 @@ const AccountSchema = new Schema(
     },
     diplome: {
       type: Boolean,
-
       default: false,
     },
+    dateDiplome:{type : Date},
+    dateEmbouche:{type : Date},
+
   },
   {
     timestamps: true,

@@ -6,7 +6,7 @@ const { register } = require('../Controllers/Auth/Register');
 const authRole = require('../Passport/RoleAllowed');
 const router = express.Router();
 
-router.post('/register',passport.authenticate('bearer', { session: false }),  register);
+router.post('/register',  register);
 router.post('/login', login);
 router.get('/profile', passport.authenticate('bearer', { session: false }), function(req, res) {
   res.json(req.user);
