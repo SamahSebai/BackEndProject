@@ -20,22 +20,39 @@ exports.FetchCv = async (req, res) => {
     res.status(500).send(error);
   }
 };
+exports.FetchCvById = async (req, res) => {
+  try {
+    const CvId = req.params.idCv;
+    const Result = await Cv.find({});
+    const x = await Cv.findById(CvId).populate("compte");
+    res.send(x.compte);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+};
 
 exports.FetchCvByStudentId = async (req, res) => {
   try {
     const compte_id = req.params.id_st;
-    const Result = await Cv.findOne({compte:compte_id });
+    const Result = await Cv.findOne({ compte: compte_id }).populate("compte");
+
     const user = await User.findById(compte_id);
-    res.send({cv:Result,user:user});
+    res.send({ cv: Result, user: user });
   } catch (error) {
+    console.log(error);
     res.status(500).send(error);
   }
 };
 
 exports.UpdateCv = async (req, res) => {
   try {
-    const _id=req.params.idCv;
-    const Result = await Cv.findByIdAndUpdate({ _id },{...req.body},{ new: true } );
+    const _id = req.params.idCv;
+    const Result = await Cv.findByIdAndUpdate(
+      { _id },
+      { ...req.body },
+      { new: true }
+    );
     res.send(Result);
   } catch (error) {
     res.status(500).send(error);

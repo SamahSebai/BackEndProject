@@ -19,7 +19,7 @@ const AccountSchema = new Schema(
     etat: { type: Boolean, default: false },
     role: {
       type: String,
-      enum: ["ADMIN", "Etudiant", "Enseignant", "ALumni"],
+      enum: ["ADMIN", "Etudiant", "Enseignant", "ALumni", "Responsable"],
       default: "ADMIN",
     },
     saisonUV: {

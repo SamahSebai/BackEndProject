@@ -11,7 +11,7 @@ exports.register = async (req, res) => {
     } else {
       const salt = bcrypt.genSaltSync(10);
       req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
-      let transporter = nodemailer.createTransport({
+      /*  let transporter = nodemailer.createTransport({
         service: "Gmail",
         auth: {
           user: "sebaisameh51@gmail.com",
@@ -35,7 +35,7 @@ exports.register = async (req, res) => {
         Manager of Academia .
         
         `,
-      });
+      });*/
       const newAcc = await new Accounts(req.body);
       const savedacc = await newAcc.save();
       if (savedacc.role === "Etudiant" || savedacc.role === "ALumni") {
