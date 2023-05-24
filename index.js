@@ -62,6 +62,7 @@ const Postuler =  require('./Routes/PostulerRoutes')
 const Confirm =  require('./Routes/confirmationRoutes')
 const Cv =  require('./Routes/CvRoutes')
 const Invitation = require('./Routes/InvitationRoutes');
+const Demande = require('./Routes/demandeRoutes');
 
 
 /**
@@ -82,6 +83,7 @@ app.use('/Api/V1' ,Postuler)
 app.use('/Api/V1' ,Confirm)
 app.use('/Api/V1' , Cv)
 app.use('/Api/V1' , Invitation)
+app.use('/Api/V1' , Demande)
 
 
 var CronJob = require('cron').CronJob;
