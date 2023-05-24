@@ -8,6 +8,7 @@ const {
   DeletePFA,
   CreatePFA,
   FetchPFAByIdEns,
+  AffectStudent,
 } = require("../Controllers/PFA/PFAController");
 const passport = require("passport");
 
@@ -17,6 +18,12 @@ router.post(
   passport.authenticate("bearer", { session: false }),
   authRole("ADMIN"),
   CreatePFA
+);
+router.put(
+  "/PFA/AffectStudentPFA/:studentId/:pfaId",
+  passport.authenticate("bearer", { session: false }),
+  authRole("Etudiant"),
+  AffectStudent
 );
 router.post(
   "/PFAens",

@@ -18,6 +18,13 @@ const PFASchema = new Schema(
       required: true,
       ref: "Account",
     },
+    students: [
+      {
+        type: String,
+        ref: "Account",
+      },
+    ],
+
     studentNumber: {
       type: Number,
       required: [true, "studentNumber obligatoire!"],

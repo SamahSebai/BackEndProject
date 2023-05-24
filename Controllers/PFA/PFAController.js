@@ -12,6 +12,33 @@ exports.CreatePFA = async (req, res) => {
   }
 };
 
+exports.AffectStudent = async (req, res) => {
+  try {
+    const { studentId, pfaId } = req.params;
+    const pfa = await PFA.findById(pfaId);
+    if (pfa.students == null) pfa.students = [];
+    if (pfa.Disponibilite == true) {
+      //  pfa.Disponibilite=false;
+      pfa.students.push(studentId);
+      if (pfa.students.length === pfa.studentNumber) pfa.Disponibilite = false;
+
+      await pfa.save();
+      res.status(200).send(pfa);
+    } else {
+      res.status(300).send("mqx student attented");
+    }
+
+    //const Result = await PFA.create(req.body);
+
+    // res.send(Result);
+  } catch (error) {
+    console.log("====================================");
+    console.log(error);
+    console.log("====================================");
+    res.status(500).send(error);
+  }
+};
+
 exports.FetchPFA = async (req, res) => {
   try {
     let query = {};
@@ -80,6 +107,7 @@ exports.FetchPFAStudents = async (req, res) => {
   try {
     const Result = await PFA.find({
       statue: "accepted",
+      Disponibilite: true,
     });
     res.json(Result);
   } catch (error) {
