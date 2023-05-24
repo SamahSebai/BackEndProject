@@ -49,7 +49,21 @@ exports.FetchPFAById = async (req , res)=>{
     }
     
     }
+    exports.FetchPFAByStudentId = async (req , res)=>{
 
+        try {
+            
+        const Result = await PFA.find({ etudiantId : req.params.idStudent})
+        
+        res.send(Result)
+        
+        
+        } catch (error) {
+        
+            res.status(500).send(error)
+        }
+        
+        }
     exports.UpdatePFA= async (req , res)=>{
 
         try {

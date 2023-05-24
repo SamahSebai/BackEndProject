@@ -10,6 +10,7 @@ const StageEteSchema = new Schema(
         Sujet: { type: String, required: [true, 'sujet obligatoire!'] },
         Technologie: { type: String, required: [true, 'technologie obligatoire!'] },
         Disponibilite: { type: Boolean, default: true },
+        etudiantId: { type: String, required: [true, 'etudiant obligatoire!'] },
 
     },
     {

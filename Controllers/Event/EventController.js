@@ -14,9 +14,10 @@ exports.CreateEvent = async (req, res) => {
 
 exports.FetchEvent = async (req, res) => {
   try {
-    const Result = await Event.find({});
-
+    const Result = await Event.find();
+    console.log("message bach result",Result);
     res.send(Result);
+    
   } catch (error) {
     res.status(500).send(error);
   }

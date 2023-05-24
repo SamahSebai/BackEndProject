@@ -8,6 +8,7 @@ const PFASchema = new Schema(
         Description: { type: String, required: [true, 'description obligatoire!'] },
         Technologie: { type: String, required: [true, 'technologie obligatoire!'] },
         Disponibilite: { type: Boolean, default: true },
+        etudiantId: { type: String, required: [true, 'etudiant obligatoire!'] },
 
     },
     {

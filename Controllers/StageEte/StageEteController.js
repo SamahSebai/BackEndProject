@@ -16,6 +16,21 @@ exports.CreateStageEte = async (req , res)=>{
     
     }
 
+    exports.FetchStageByStudentId = async (req , res)=>{
+
+        try {
+            
+        const Result = await StageEte.find({ etudiantId : req.params.idStudent})
+        
+        res.send(Result)
+        
+        
+        } catch (error) {
+        
+            res.status(500).send(error)
+        }
+        
+        }
 
 exports.FetchStageEte = async (req , res)=>{
 

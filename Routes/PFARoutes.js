@@ -2,7 +2,7 @@ const express=require('express');
 const authRole = require('../Passport/RoleAllowed')
 
 
-const { FetchPFA, FetchPFAById, UpdatePFA, DeletePFA, CreatePFA } = require('../Controllers/PFA/PFAController');
+const { FetchPFA, FetchPFAById, UpdatePFA, DeletePFA, CreatePFA, FetchPFAByStudentId } = require('../Controllers/PFA/PFAController');
 const passport = require('passport');
 
 const router=express.Router()
@@ -10,6 +10,7 @@ router.post('/PFA',  passport.authenticate('bearer', { session: false }), authRo
 router.post('/PFAens',  passport.authenticate('bearer', { session: false }), authRole("Enseignant") , CreatePFA)
 router.get('/PFA',  passport.authenticate('bearer', { session: false }), FetchPFA)
 router.get('/PFA/:idPFA',  passport.authenticate('bearer', { session: false }) , FetchPFAById)
+router.get('/PFA/student/:idStudent',  passport.authenticate('bearer', { session: false }) , FetchPFAByStudentId)
 router.put('/PFA/:idPFA',  passport.authenticate('bearer', { session: false }), authRole("ADMIN") , UpdatePFA)
 router.put('/PFAens/:idPFA',  passport.authenticate('bearer', { session: false }), authRole( "Enseignant") , UpdatePFA)
 router.delete('/PFA/:idPFA' ,  passport.authenticate('bearer', { session: false }), authRole("ADMIN"), DeletePFA)

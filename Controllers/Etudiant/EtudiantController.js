@@ -122,3 +122,52 @@ exports.uploadMultiple = async (req, res) => {
     res.status(500).send({ Message: "Server Error", Error: error.message });
   }
 };
+
+exports.updateSeason = async (req,res) => {
+  try {
+    const items = await Etudiant.find({ role: "student", mustUpdateProfil: false });
+
+    for (let i = 0; i < items.length; i++) {
+      await Etudiant.findOneAndUpdate({ _id: items[i]._id }, { mustUpdateProfil: true }, { new: true });
+    }
+
+    console.log(`${items.length} documents updated`);
+    return res.json({
+      Message: "updated successfully"
+    });
+  } catch (error) {
+    console.log("##########:", error);
+  }
+};
+
+exports.academicProgress = async (req, res) => {
+  try {
+    const { _id } = req.params;
+    if (_id === null || _id === undefined) {
+      res.status(406).json({ Message: "Missing required params" });
+    }
+    const { level, diplome } = req.body;
+    const findDuplication = await Etudiant.findOne({ _id, role: "Etudiant" });
+    if (!findDuplication) {
+      res.status(409).json({ Message: "User doesn't exist" });
+    }
+
+    let graduationDate = null;
+    if (level === '3') {
+      graduationDate = new Date();
+    }
+
+    const updateStudent = await Etudiant.findOneAndUpdate(
+      { _id, role: "Etudiant" },
+      { niveau:level, diplome },
+      { new: true }
+    );
+    if (!updateStudent) {
+      return res.status(400).json({ message: "Failed to update" });
+    }
+    return res.status(200).json({ message: "Academic progress updated successfully", data: updateStudent });
+  } catch (error) {
+    console.log("Error updating academic progress:", error);
+    return res.status(500).send({ message: "Server error" });
+  }
+};
