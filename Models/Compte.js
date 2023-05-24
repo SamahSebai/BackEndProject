@@ -31,6 +31,10 @@ const AccountSchema = new Schema(
 
       default: false,
     },
+    datediplome: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,

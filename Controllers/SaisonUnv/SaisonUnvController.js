@@ -1,79 +1,55 @@
-const Saison = require('../../Models/SaisonUnv')
+const Saison = require("../../Models/SaisonUnv");
 
-exports.CreateSaison = async (req , res)=>{
+exports.CreateSaison = async (req, res) => {
+  try {
+    const Result = await Saison.create(req.body);
+    res.send(Result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
-    try {       
-    const Result = await Saison.create(req.body)  
-    res.send(Result)
-      
-    } catch (error) {   
-        res.status(500).send(error)
-    }   
-    }
+exports.FetchSaison = async (req, res) => {
+  try {
+    const Result = await Saison.find({});
 
-exports.FetchSaison = async (req , res)=>{
+    res.send(Result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
-try {
-    
-const Result = await Saison.find({})
+exports.FetchSaisonById = async (req, res) => {
+  try {
+    const Result = await Saison.findById(req.params.idSaison);
 
-res.send(Result)
+    res.send(Result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
+exports.UpdateSaison = async (req, res) => {
+  try {
+    const Result = await Saison.findByIdAndUpdate(
+      req.params.idSaison,
+      req.body
+    );
 
-} catch (error) {
+    const Resultupdate = await Saison.findById(req.params.idSaison);
 
-    res.status(500).send(error)
-}
+    res.send(Resultupdate);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
-}
+exports.DeleteSaison = async (req, res) => {
+  try {
+    const Result = await Saison.findByIdAndDelete(req.params.idSaison);
 
-
-exports.FetchSaisonById = async (req , res)=>{
-
-    try {
-        
-    const Result = await Saison.findById(req.params.idSaison)
-    
-    res.send(Result)
-    
-    
-    } catch (error) {
-    
-        res.status(500).send(error)
-    }
-    
-    }
-
-    exports.UpdateSaison= async (req , res)=>{
-
-        try {
-            
-        const Result = await Saison.findByIdAndUpdate(req.params.idSaison , req.body)
-
-        const Resultupdate = await Saison.findById(req.params.idSaison)
-        
-        res.send(Resultupdate)
-        
-        
-        } catch (error) {
-        
-            res.status(500).send(error)
-        }
-        
-        }
-
-
-        exports.DeleteSaison = async (req , res )=>
-        {
-            try {
-
-                const Result = await Saison.findByIdAndDelete(req.params.idSaison) 
-
-                
-                res.status(200).send('Saison deleted with success')
-            } catch (error) {
-                
-
-                res.status(500).send('error serveur')
-            }
-        }
+    res.status(200).send("Saison deleted with success");
+  } catch (error) {
+    res.status(500).send("error serveur");
+  }
+};
