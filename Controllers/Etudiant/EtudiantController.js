@@ -75,67 +75,50 @@ exports.DeleteEtudiant = async (req, res) => {
   }
 };
 
-exports.uploadStudents = (req, res) => {
-  // Connect to the MongoDB database
-  // Create a new instance of the ExcelJS Workbook
-  const workbook = new Excel.Workbook();
-  // Read the data from the Excel file using the buffer
-  workbook.xlsx
-    .load(req.files[0].buffer)
-    .then(() => {
-      // Get the first sheet
-      const sheet = workbook.getWorksheet(1);
-      // Iterate over the rows in the sheet starting from the second row
-      sheet.eachRow({ includeEmpty: false, startRow: 2 }, (row, n) => {
-        if (n > 1) {
-          try {
-            console.log("...", row.values);
-            // Get the values of the cells
-            //  let email = typeof row.values[6] === "string" ? row.values[6] : row.values[6].text
-            //  const salt = bcrypt.genSaltSync(10);
-            //  const hashPassword = bcrypt.hashSync(email, salt);
-            // Create new user and student objects with the values
-            console.log("...", row.values);
-
-            const Account = new Account({
-              first_name: row.values[1],
-              lastName: row.values[2],
-              email: row.values[3],
-              /* password: row.values[4],
-                    address: row.values[5],
-                    Specialite: row.values[6],
-                    classe: row.values[7],*/
-            });
-
-            /*     const user = new User({
-                            email: email,
-                            password: hashPassword,
-                            username: email,
-                            roles: ["student"]
-                        })
-                        const student = new Student({
-                            credentials_id: user.id,
-                            NIN: row.values[1],
-                            first_name: row.values[2],
-                            last_name: row.values[3],
-                            birthdate: row.values[4],
-                            first_year: row.values[5],
-                            email: email,
-                            phone_number: row.values[7]
-                        });*/
-            // Save the objects to the MongoDB database
-
-            /*user.save();
-                        student.save();*/
-            Account.save();
-          } catch (err) {
-            console.log("row not saved");
-          }
-        }
+exports.uploadMultiple = async (req, res) => {
+  try {
+    // console.log("file", req.file)
+    const results = [];
+    fs.createReadStream(req.file.path)
+      .pipe(
+        parse({
+          Comment: "#",
+          relax_column_count: true,
+          columns: true,
+          delimiter: ";",
+        })
+      )
+      .on("data", (data) => {
+        results.push(data);
+      })
+      .on("error", (err) => {
+        res.status(500).send({ Message: "Server Error", Error: error.message });
+      })
+      .on("end", async () => {
+        results.pop();
+        console.log("popped", results);
+        results.forEach(async (student) => {
+          student.password = randomString(
+            12,
+            "abcdefghijklmnopqrstuvwxyz0123456789"
+          );
+          // try {
+          //   await sendAcount(student)
+          // } catch (error) {
+          //   console.log("##########:", error);
+          //   res.status(500).send({ Message: "Server Error", Error: error.message });
+          // }
+        });
+        const createdEtudiant = await Etudiant.create(results);
+        return res
+          .status(200)
+          .json({
+            Message: "Etudiant(s) uploaded successfully",
+            data: createdEtudiant,
+          });
       });
-      res.status(200).json({ message: "Students uploaded successfully" });
-    })
-    .catch((err) => {
-      res.status(500).json({ message: err.message });
-    });
+  } catch (error) {
+    console.log("##########:", error);
+    res.status(500).send({ Message: "Server Error", Error: error.message });
+  }
 };
