@@ -1,6 +1,6 @@
 const passport = require('passport');
 const BearerStrategy = require('passport-http-bearer').Strategy;
-const User = require('../models/Compte');
+const User = require('../Models/Compte');
 const jwt = require('jsonwebtoken');
 
 
