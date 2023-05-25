@@ -11,7 +11,7 @@ router.put('/Alumni/:idAlumni' ,  passport.authenticate('bearer', { session: fal
 router.put('/Alumni/:idAlumni',  passport.authenticate('bearer', { session: false }) , UpdateAlumni)
 
 router.get('/Alumni/:idAlumni' ,  passport.authenticate('bearer', { session: false }), authRole("ADMIN"), FetchAlumniById)
-router.delete('/Alumni/:idAlumni',  passport.authenticate('bearer', { session: false }), DeleteAlumni)
+router.delete('/Alumni/:idAlumni', DeleteAlumni)
 
 
 module.exports=router

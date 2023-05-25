@@ -8,9 +8,14 @@ const router = express.Router();
 
 router.post('/register',  register);
 router.post('/login', login);
-router.get('/profile', passport.authenticate('bearer', { session: false }), function(req, res) {
-  res.json(req.user);
+router.get('/profile', passport.authenticate('bearer', { session: false }), function(req, res, next) {
+  try {
+    res.json(req.user);
+  } catch (error) {
+    next(error);
+  }
 });
+
 router.post('/forgetPassword', forgetpassword);
 router.put('/resetPassword/:token', resetPassword);
 router.put('/updateuser/:iduser', UpdateUser);
