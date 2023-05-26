@@ -1,5 +1,4 @@
 const Cv = require("../../Models/Cv");
-const User = require("../../Models/Compte");
 
 exports.CreateCv = async (req, res) => {
   try {

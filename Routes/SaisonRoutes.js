@@ -1,19 +1,44 @@
-const express=require('express');
-const authRole = require('../Passport/RoleAllowed')
+const express = require("express");
+const authRole = require("../Passport/RoleAllowed");
 
+const {
+  FetchSaison,
+  FetchSaisonById,
+  UpdateSaison,
+  DeleteSaison,
+  CreateSaison,
+} = require("../Controllers/SaisonUnv/SaisonUnvController");
+const passport = require("passport");
 
-const { FetchSaison, FetchSaisonById, UpdateSaison, DeleteSaison, CreateSaison } = require('../Controllers/SaisonUnv/SaisonUnvController');
-const passport = require('passport');
+const router = express.Router();
 
-const router=express.Router()
+router.get(
+  "/Saison",
+  passport.authenticate("bearer", { session: false }),
+  FetchSaison
+);
+router.post(
+  "/Saison",
+  passport.authenticate("bearer", { session: false }),
+  authRole("ADMIN"),
+  CreateSaison
+);
+router.get(
+  "/Saison/:idSaison",
+  passport.authenticate("bearer", { session: false }),
+  FetchSaisonById
+);
+router.put(
+  "/Saison/:idSaison",
+  passport.authenticate("bearer", { session: false }),
+  authRole("ADMIN"),
+  UpdateSaison
+);
+router.delete(
+  "/Saison/:idSaison",
+  passport.authenticate("bearer", { session: false }),
+  authRole("ADMIN"),
+  DeleteSaison
+);
 
-router.get('/Saison',  passport.authenticate('bearer', { session: false }) , FetchSaison)
-router.post('/Saison',  passport.authenticate('bearer', { session: false }), authRole("ADMIN") , CreateSaison)
-router.get('/Saison/:idSaison',  passport.authenticate('bearer', { session: false }) , FetchSaisonById)
-router.put('/Saison/:idSaison',  passport.authenticate('bearer', { session: false }), authRole("ADMIN") , UpdateSaison)
-router.delete('/Saison/:idSaison' ,  passport.authenticate('bearer', { session: false }), authRole("ADMIN"), DeleteSaison)
-
-
-
-
-module.exports=router
+module.exports = router;

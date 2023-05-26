@@ -10,16 +10,12 @@ const {
   FetchPFAByIdEns,
   FetchPFAStudents,
   AffectStudent,
+  FetchPFAByStudentId,
 } = require("../Controllers/PFA/PFAController");
-const passport = require("passport");
 
+const passport = require("passport");
 const router = express.Router();
-router.post(
-  "/PFA",
-  passport.authenticate("bearer", { session: false }),
-  authRole("ADMIN"),
-  CreatePFA
-);
+
 router.put(
   "/PFA/AffectStudentPFA/:studentId/:pfaId",
   passport.authenticate("bearer", { session: false }),
@@ -48,6 +44,7 @@ router.put(
   authRole("ADMIN"),
   UpdatePFA
 );
+
 router.put(
   "/PFAens/:idPFA",
   passport.authenticate("bearer", { session: false }),
@@ -80,4 +77,11 @@ router.get(
   authRole("Etudiant"),
   FetchPFAStudents
 );
+
+router.get(
+  "/PFA/student/:idStudent",
+  passport.authenticate("bearer", { session: false }),
+  FetchPFAByStudentId
+);
+
 module.exports = router;

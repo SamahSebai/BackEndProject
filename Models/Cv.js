@@ -25,28 +25,36 @@ const CvSchema = new Schema(
       {
         titre: {
           type: String,
+          required: true,
         },
         description: {
           type: String,
+          required: true,
         },
         technologies: {
           type: String,
+          required: true,
         },
         nom_societe: {
           type: String,
+          required: true,
         },
         type_exp: {
           type: String,
-          enum: ["PFE", "PFA", "STAGE D'ETE", "Vie professionnelle"],
+          required: true,
+          enum: ["PFE", "PFA","STAGE D'ETE","Vie Associative"],
         },
         emplacement: {
           type: String,
+          required: true,
         },
         dateDebut: {
           type: Date,
+          required: true,
         },
         dateFin: {
           type: Date,
+          required: true,
         },
       },
     ],
@@ -54,22 +62,28 @@ const CvSchema = new Schema(
       {
         titre_univ: {
           type: String,
+          required: true,
         },
         titre_diplome: {
           type: String,
+          required: true,
         },
         mention: {
           type: String,
-          enum: ["Très bien", "Bien", "Assez bien", "Passable"],
+          required: true,
+          enum: ["Très bien", "Bien","Assez bien","Passable"],
         },
         description: {
           type: String,
+          required: true,
         },
         dateDebut: {
           type: Date,
+          required: true,
         },
         dateFin: {
           type: Date,
+          required: true,
         },
       },
     ],
@@ -77,21 +91,27 @@ const CvSchema = new Schema(
       {
         titre_certif: {
           type: String,
+          required: true,
         },
         source_certif: {
           type: String,
+          required: true,
         },
         description: {
           type: String,
+          required: true,
         },
         emplacement: {
           type: String,
+          required: true,
         },
         dateDebut: {
           type: Date,
+          required: true,
         },
         dateFin: {
           type: Date,
+          required: true,
         },
       },
     ],
@@ -99,25 +119,30 @@ const CvSchema = new Schema(
       {
         lang: {
           type: String,
+          required: true,
         },
         level: {
           type: String,
+          required: true,
         },
       },
     ],
     hard_skills: [
       {
         type: String,
+        required: true,
       },
     ],
     soft_skills: [
       {
         type: String,
+        required: true,
       },
     ],
     hobbys: [
       {
         type: String,
+        required: true,
       },
     ],
   },

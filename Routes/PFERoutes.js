@@ -1,20 +1,105 @@
-const express=require('express');
-const authRole = require('../Passport/RoleAllowed')
+const express = require("express");
+const authRole = require("../Passport/RoleAllowed");
 
+const {
+  FetchPFE,
+  FetchPFEById,
+  UpdatePFE,
+  DeletePFE,
+  CreatePFE,
+  FetchPFEnonaffecte,
+  FetchPFEaffecte,
+  ChoisirPFE,
+  getByPays,
+  GetBySociete,
+  GetByEnseig,
+  GetByTech,
+  getnotif,
+} = require("../Controllers/PFE/PFEController");
+const passport = require("passport");
 
-const { FetchPFE, FetchPFEById, UpdatePFE, DeletePFE, CreatePFE, getPfeStatistics } = require('../Controllers/PFE/PFEController');
-const passport = require('passport');
+const router = express.Router();
+router.post(
+  "/PFE",
+  passport.authenticate("bearer", { session: false }),
+  authRole("ADMIN"),
+  CreatePFE
+);
+router.post(
+  "/PFEe",
+  passport.authenticate("bearer", { session: false }),
+  authRole("Etudiant"),
+  CreatePFE
+);
+router.get(
+  "/PFE",
+  passport.authenticate("bearer", { session: false }),
+  FetchPFE
+);
+router.get(
+  "/enseignant_PFE",
+  passport.authenticate("bearer", { session: false }),
+  authRole("Enseignant"),
+  FetchPFEnonaffecte
+);
+router.get(
+  "/enseignant_affecte",
+  passport.authenticate("bearer", { session: false }),
+  authRole("Enseignant"),
+  FetchPFEaffecte
+);
+router.get(
+  "/PFE/:idPFE",
+  passport.authenticate("bearer", { session: false }),
+  FetchPFEById
+);
+router.put(
+  "/PFE/:idPFE",
+  passport.authenticate("bearer", { session: false }),
+  authRole("ADMIN"),
+  UpdatePFE
+);
+router.get(
+  "/selectpfe/:idPFE",
+  passport.authenticate("bearer", { session: false }),
+  authRole("Enseignant"),
+  ChoisirPFE
+);
+router.delete(
+  "/PFE/:idPFE",
+  passport.authenticate("bearer", { session: false }),
+  authRole("ADMIN"),
+  DeletePFE
+);
+router.get(
+  "/PFEStatPays",
+  passport.authenticate("bearer", { session: false }),
+  authRole("Enseignant"),
+  getByPays
+);
+router.get(
+  "/PFEStatSoc",
+  passport.authenticate("bearer", { session: false }),
+  authRole("Enseignant"),
+  GetBySociete
+);
+router.get(
+  "/PFEStatEns",
+  passport.authenticate("bearer", { session: false }),
+  authRole("Enseignant"),
+  GetByEnseig
+);
+router.get(
+  "/PFEStatTech",
+  passport.authenticate("bearer", { session: false }),
+  authRole("Enseignant"),
+  GetByTech
+);
+router.get(
+  "/notifs",
+  passport.authenticate("bearer", { session: false }),
+  authRole("Etudiant"),
+  getnotif
+);
 
-const router=express.Router()
-router.post('/PFE',  passport.authenticate('bearer', { session: false }), authRole("ADMIN") , CreatePFE)
-router.post('/PFEe',  passport.authenticate('bearer', { session: false }), authRole( "Etudiant") , CreatePFE)
-router.get('/PFE',  passport.authenticate('bearer', { session: false }) , FetchPFE)
-router.get('/PFE/:idPFE',  passport.authenticate('bearer', { session: false }) , FetchPFEById)
-router.put('/PFE/:idPFE',  passport.authenticate('bearer', { session: false }), authRole("ADMIN") , UpdatePFE)
-router.delete('/PFE/:idPFE' ,  passport.authenticate('bearer', { session: false }), authRole("ADMIN"), DeletePFE)
-router.get('/PFEStatistics' ,  passport.authenticate('bearer', { session: false }), authRole("ADMIN"), getPfeStatistics)
-
-
-
-
-module.exports=router
+module.exports = router;

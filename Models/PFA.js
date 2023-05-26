@@ -13,6 +13,7 @@ const PFASchema = new Schema(
       default: false,
       enum: ["accepted", "refused", "pending"],
     },
+    etudiantId: { type: String, required: [true, 'etudiant obligatoire!'] },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

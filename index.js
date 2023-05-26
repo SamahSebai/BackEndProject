@@ -7,6 +7,8 @@ const authRole = require("./passport/RoleAllowed");
 const passport = require("passport");
 const dotenv = require("dotenv");
 const nodemailer = require("nodemailer");
+const socketIo = require("socket.io");
+const http = require("http");
 dotenv.config();
 
 require("./passport/bearer");
@@ -63,6 +65,8 @@ const Postuler = require("./Routes/PostulerRoutes");
 const Confirm = require("./Routes/confirmationRoutes");
 const Cv = require("./Routes/CvRoutes");
 const Invitation = require("./Routes/InvitationRoutes");
+const Demande = require("./Routes/demandeRoutes");
+const { Timer } = require("./timer");
 
 /**
  * user routes
@@ -147,3 +151,29 @@ app.listen(PORT, (error) => {
     );
   else console.log("Error occurred, server can't start", error);
 });
+
+app.use("/Api/V1", Demande);
+
+//PORT
+const server = http.createServer(app);
+server.listen(PORT, (error) => {
+  if (!error) {
+    console.log(
+      "Server is Successfully Running, and App is listening on port " + PORT
+    );
+    Timer();
+  } else console.log("Error occurred, server can't start", error);
+});
+const io = socketIo(server, { cors: { origin: "*", methods: "*" } });
+io.on("connection", (socket) => {
+  console.log("new user joined the server");
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+});
+
+module.exports = {
+  io,
+};
+

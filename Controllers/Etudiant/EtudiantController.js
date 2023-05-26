@@ -1,4 +1,5 @@
-const Etudiant = require("../../Models/Compte"); 
+const Etudiant = require("../../Models/Compte");
+const sendmail = require("../../mailing/mailer");
 const bcrypt = require("bcryptjs");
 const Excel = require("exceljs");
 
@@ -110,15 +111,83 @@ exports.uploadMultiple = async (req, res) => {
           // }
         });
         const createdEtudiant = await Etudiant.create(results);
-        return res
-          .status(200)
-          .json({
-            Message: "Etudiant(s) uploaded successfully",
-            data: createdEtudiant,
-          });
+        return res.status(200).json({
+          Message: "Etudiant(s) uploaded successfully",
+          data: createdEtudiant,
+        });
       });
   } catch (error) {
     console.log("##########:", error);
     res.status(500).send({ Message: "Server Error", Error: error.message });
+  }
+};
+
+exports.SendMailStudentsPortefolio = async (req, res) => {
+  try {
+    const Students = await Etudiant.find({ role: "Etudiant" });
+    for (let i = 0; i < Students.length; i++) {
+      const student = Students[i];
+      await sendmail.Mail_Sender(
+        student.email,
+        `<h1>A propos de votre portefolio!</h1> 
+      <p> Bonjour  ${student.firstName} ${student.lastName},c'est la fin de semestre!! <br><br>
+      N'oubliez pas de mettre à jour vos compétences acquises tout au long du semestre et du portefolio!</p>
+      qui va contenir les liens vers les travaux effectués, tout ceci va enrichir votre cv.<br><br>
+      N'hésitez pas à nous contacter si c'est nécessaire<br>
+      Cordialement .<br>
+      Administration de l'isamm<br>
+      `,
+        "Mise à jour du portefolio et compétences"
+      );
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.SendMailStudentsWork = async (req, res) => {
+  try {
+    const Students = await Etudiant.find({ role: "Etudiant" });
+    for (let i = 0; i < Students.length; i++) {
+      const student = Students[i];
+      await sendmail.Mail_Sender(
+        student.email,
+        `<h1>A propos de votre travail</h1> 
+      <p> Bonjour  ${student.firstName} ${student.lastName},six mois sont déja passés<br><br>
+      Voici le lien de l'application <a href:http://localhost:4000/profile>Click here</a></p>
+      pour modifier votre travail
+      <br><br>
+      N'hésitez pas à nous contacter si c'est nécessaire<br>
+      Cordialement .<br>
+      Administration de l'isamm<br>
+      `,
+        "Mise à jour du portefolio et compétences"
+      );
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.SendMailStudentsDiplome = async (req, res) => {
+  try {
+    const Students = await Etudiant.find({ role: "Etudiant", diplome: false });
+    for (let i = 0; i < Students.length; i++) {
+      const student = Students[i];
+      await sendmail.Mail_Sender(
+        student.email,
+        `<h1>La date d'obtention du diplome</h1> 
+      <p> Bonjour  ${student.firstName} ${student.lastName},vous n'avez pas encore spécifié la date de d'obtention du diplome <br><br>
+      Voici le lien de l'application <a href="http://localhost:4000/profile">Click here</a></p>
+      spécifier la date de diplome obtenu <br><br>
+      N'hésitez pas à nous contacter si c'est nécessaire<br>
+      Cordialement .<br>
+      Administration de l'isamm<br>
+      `,
+        "Mise à jour du portefolio et compétences"
+      );
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
