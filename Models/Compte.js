@@ -9,6 +9,9 @@ const AccountSchema = new Schema(
     password: { type: String, required: [true, "Mot de passe obligatoire!"] },
     passwordHashed: { type: String },
     address: { type: String },
+    pays: { type: String },
+    société: { type: String },
+    promotion: { type: String },
     Specialite: { type: String },
     niveau: { type: String },
     datedeNaissance: { type: String },
@@ -16,10 +19,10 @@ const AccountSchema = new Schema(
     CrudEtudiant: { type: Boolean },
     CrudEnseignant: { type: Boolean },
     CrudEvent: { type: Boolean },
-    mustUpdateProfil: { type: Boolean , default: false },
+    mustUpdateProfil: { type: Boolean, default: false },
     classe: { type: String },
     visibilite: { type: Boolean, default: false },
-    etat: { type: Boolean, default: false },
+    etat: { type: Boolean, default: null },
     role: {
       type: String,
       enum: ["ADMIN", "Etudiant", "Enseignant", "ALumni", "Responsable"],
@@ -31,13 +34,10 @@ const AccountSchema = new Schema(
     },
     diplome: {
       type: Boolean,
-
       default: false,
     },
-    datediplome: {
-      type: String,
-      default: "",
-    },
+    dateDiplome: { type: Date },
+    dateEmbouche: { type: Date },
   },
   {
     timestamps: true,

@@ -65,6 +65,7 @@ const Postuler = require("./Routes/PostulerRoutes");
 const Confirm = require("./Routes/confirmationRoutes");
 const Cv = require("./Routes/CvRoutes");
 const Invitation = require("./Routes/InvitationRoutes");
+const Demande = require("./Routes/demandeRoutes");
 const { Timer } = require("./timer");
 
 /**
@@ -85,63 +86,8 @@ app.use("/Api/V1", Postuler);
 app.use("/Api/V1", Confirm);
 app.use("/Api/V1", Cv);
 app.use("/Api/V1", Invitation);
+app.use("/Api/V1", Demande);
 
-var CronJob = require("cron").CronJob;
-var job = new CronJob(
-  "* * * * *",
-  async function () {
-    /*let transporter = nodemailer.createTransport({
-            service :"Gmail",
-              auth: {
-                user: "sebaisameh51@gmail.com",
-                pass: "kashplocvadlnwnk" ,
-      
-              },
-            });
-            await transporter.sendMail({
-              from:"sebaisameh51@gmail.com",
-              to: "ahlemtbini28@gmail.com",
-              subject: "notification ",
-              html: `<h1>You will see this message six monthes view link <a href="
-              #">dashbord</a>
-              
-              `
-            })
-            console.log("you will see this msg every six monthes")*/
-  },
-  null,
-  true,
-  "America/Los_Angeles"
-);
-job.start();
-
-var jobDiplome = new CronJob(
-  "* * * * *",
-  async function () {
-    /*let transporter = nodemailer.createTransport({
-            service :"Gmail",
-              auth: {
-                user: "sebaisameh51@gmail.com",
-                pass: "kashplocvadlnwnk" ,
-      
-              },
-            });
-            await transporter.sendMail({
-              from:"sebaisameh51@gmail.com",
-              to: "ahlemtbini28@gmail.com",
-              subject: "notification ",
-              html: `<h1>You will see this message six monthes view link <a href="
-              #">dashbord</a>
-              
-              `
-            })
-            console.log("you should update your profil if you are graduated")*/
-  },
-  null,
-  true,
-  "America/Los_Angeles"
-);
-jobDiplome.start();
 //PORT
 const server = http.createServer(app);
 server.listen(PORT, (error) => {

@@ -5,9 +5,12 @@ mongoose.Promise = global.Promise;
 const BlogSchema = new Schema(
     {
        
-        Type: { type: String, required: [true, 'type obligatoire!'] },
-        Sujet: { type: String, required: [true, 'sujet obligatoire!'] },
-        description: { type: String, required: [true, 'description obligatoire!'] },
+        Type: { type: String },
+        Sujet: { type: String},
+        description: { type: String },
+        Moderateur:{type: mongoose.Schema.Types.ObjectId,
+            ref: "Account",}
+        
 
     },
     {
