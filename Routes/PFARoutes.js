@@ -8,8 +8,9 @@ const {
   DeletePFA,
   CreatePFA,
   FetchPFAByIdEns,
+  FetchPFAStudents,
   AffectStudent,
-  FetchPFAByStudentId
+  FetchPFAByStudentId,
 } = require("../Controllers/PFA/PFAController");
 
 const passport = require("passport");
@@ -37,12 +38,19 @@ router.get(
   passport.authenticate("bearer", { session: false }),
   FetchPFAById
 );
-router.put('/PFA/:idPFA',  
-passport.authenticate('bearer', { session: false }), 
-authRole("ADMIN") , 
-UpdatePFA)
+router.put(
+  "/PFA/:idPFA",
+  passport.authenticate("bearer", { session: false }),
+  authRole("ADMIN"),
+  UpdatePFA
+);
 
-router.put('/PFAens/:idPFA',  passport.authenticate('bearer', { session: false }), authRole( "Enseignant") , UpdatePFA)
+router.put(
+  "/PFAens/:idPFA",
+  passport.authenticate("bearer", { session: false }),
+  authRole("Enseignant"),
+  UpdatePFA
+);
 router.delete(
   "/PFA/:idPFA",
   passport.authenticate("bearer", { session: false }),
@@ -63,12 +71,17 @@ router.get(
   authRole("Enseignant"),
   FetchPFAByIdEns
 );
+router.get(
+  "/getStudentsPFA",
+  passport.authenticate("bearer", { session: false }),
+  authRole("Etudiant"),
+  FetchPFAStudents
+);
 
-
-
-
-router.get('/PFA/student/:idStudent',  passport.authenticate('bearer', { session: false }) , FetchPFAByStudentId)
-
-
+router.get(
+  "/PFA/student/:idStudent",
+  passport.authenticate("bearer", { session: false }),
+  FetchPFAByStudentId
+);
 
 module.exports = router;
