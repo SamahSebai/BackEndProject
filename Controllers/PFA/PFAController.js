@@ -117,6 +117,16 @@ exports.FetchPFAStudents = async (req, res) => {
   try {
     const Result = await PFA.find({
       statue: "accepted",
+    });
+    res.json(Result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+exports.FetchPFAByIdStudent = async (req, res) => {
+  try {
+    console.log("dsdsdsdsdsd");
+    const Result = await PFA.find({
       Disponibilite: true,
     });
     res.json(Result);
