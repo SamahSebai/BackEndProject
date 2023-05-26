@@ -13,7 +13,13 @@ exports.login = async (req, res) => {
         userId: user._id,
       };
       var token = jwt.sign(data, "secret", { expiresIn: "1d" });
-      res.status(200).send({ message: "connecté avec succés!", token: token });
+      res
+        .status(200)
+        .send({
+          message: "connecté avec succés!",
+          token: token,
+          id: data.userId,
+        });
     } else {
       res
         .status(400)

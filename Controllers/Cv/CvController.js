@@ -1,5 +1,5 @@
 const Cv = require("../../Models/Cv");
-
+const User = require("../../Models/Compte");
 exports.CreateCv = async (req, res) => {
   try {
     const Result = await Cv.create(req.body);
@@ -34,12 +34,10 @@ exports.FetchCvById = async (req, res) => {
 exports.FetchCvByStudentId = async (req, res) => {
   try {
     const compte_id = req.params.id_st;
-    const Result = await Cv.findOne({ compte: compte_id }).populate("compte");
-
+    const Result = await Cv.findOne({ compte: compte_id });
     const user = await User.findById(compte_id);
     res.send({ cv: Result, user: user });
   } catch (error) {
-    console.log(error);
     res.status(500).send(error);
   }
 };
