@@ -85,3 +85,23 @@ exports.register = async (req, res) => {
     res.status(500).send({ message: error.message || "An error occurred" });
   }
 };
+
+
+
+
+
+exports.registerAlumni = async (req, res) => {
+  try {
+    const found = await Accounts.findOne({ email: req.body.email });
+    if (found !== null) {
+      return res.status(400).send({ message: "E-mail déjà utilisé!" });
+    }
+    const salt = bcrypt.genSaltSync(10);
+    req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);  
+    console.log(req.body);
+    const alumni = await Accounts.create(req.body);
+    res.status(201).send(alumni);
+  } catch (error) {
+    res.status(500).send({ message: error.message || "An error occurred" });
+  }
+};
