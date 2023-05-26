@@ -8,6 +8,7 @@ const {
   DeletePFA,
   CreatePFA,
   FetchPFAByIdEns,
+  FetchPFAStudents,
   AffectStudent,
 } = require("../Controllers/PFA/PFAController");
 const passport = require("passport");
@@ -73,5 +74,10 @@ router.get(
   authRole("Enseignant"),
   FetchPFAByIdEns
 );
-
+router.get(
+  "/getStudentsPFA",
+  passport.authenticate("bearer", { session: false }),
+  authRole("Etudiant"),
+  FetchPFAStudents
+);
 module.exports = router;

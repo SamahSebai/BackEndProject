@@ -20,7 +20,7 @@ const PFASchema = new Schema(
     },
     students: [
       {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Account",
       },
     ],
