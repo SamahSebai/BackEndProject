@@ -17,17 +17,7 @@ const {
 } = require("../Controllers/Etudiant/EtudiantController");
 const passport = require("passport");
 const csvtojson = require("csvtojson");
-
-const {
-  FetchEtudiant,
-  FetchEtudiantById,
-  UpdateEtudiant,
-  DeleteEtudiant,
-  UpdateEtudiantVisibility,
-  FetchEtudiantPublic,
-  uploadStudents,
-} = require("../Controllers/Etudiant/EtudiantController");
-const passport = require("passport");
+const router = express.Router();
 
 /*const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -130,7 +120,5 @@ router.post(
   uploadMultiple
 );
 router.post("/mailportefolio", SendMailStudentsPortefolio);
-router.put("/academicProgress/:_id", academicProgress);
-router.put("/updateSeason", updateSeason);
 
 module.exports = router;

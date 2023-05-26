@@ -33,16 +33,11 @@ exports.FetchCvById = async (req, res) => {
 
 exports.FetchCvByStudentId = async (req, res) => {
   try {
-<<<<<<< HEAD
     const compte_id = req.params.id_st;
     const Result = await Cv.findOne({ compte: compte_id }).populate("compte");
 
     const user = await User.findById(compte_id);
     res.send({ cv: Result, user: user });
-=======
-    const Result = await Cv.findById(req.params.id_st);
-    res.send(Result);
->>>>>>> Ahlem_backend
   } catch (error) {
     console.log(error);
     res.status(500).send(error);

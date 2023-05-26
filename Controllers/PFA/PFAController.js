@@ -54,8 +54,17 @@ exports.FetchPFA = async (req, res) => {
         createdBy: idEns,
       };
     }
-<<<<<<< HEAD
     const Result = await PFA.find(query).populate("createdBy");
+    res.send(Result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+exports.FetchPFAByStudentId = async (req, res) => {
+  try {
+    const Result = await PFA.find({ etudiantId: req.params.idStudent });
+
     res.send(Result);
   } catch (error) {
     res.status(500).send(error);
@@ -65,24 +74,6 @@ exports.FetchPFA = async (req, res) => {
 exports.FetchPFAById = async (req, res) => {
   try {
     const Result = await PFA.findById(req.params.idPFA);
-=======
-    exports.FetchPFAByStudentId = async (req , res)=>{
-
-        try {
-            
-        const Result = await PFA.find({ etudiantId : req.params.idStudent})
-        
-        res.send(Result)
-        
-        
-        } catch (error) {
-        
-            res.status(500).send(error)
-        }
-        
-        }
-    exports.UpdatePFA= async (req , res)=>{
->>>>>>> AhmedAminBackend
 
     res.send(Result);
   } catch (error) {

@@ -15,7 +15,6 @@ exports.CreateEvent = async (req, res) => {
 
 exports.FetchEvent = async (req, res) => {
   try {
-<<<<<<< HEAD
     let filter = {};
     const { id } = req.query;
     if (id) {
@@ -32,12 +31,7 @@ exports.FetchEvent = async (req, res) => {
     }
     const Result = await Event.find(filter);
 
-=======
-    const Result = await Event.find();
-    console.log("message bach result",Result);
->>>>>>> AhmedAminBackend
     res.send(Result);
-    
   } catch (error) {
     res.status(500).send(error);
   }
