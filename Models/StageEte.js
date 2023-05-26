@@ -1,21 +1,27 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 mongoose.Promise = global.Promise;
 
 const StageEteSchema = new Schema(
-    {
-        Specialite: { type: String, required: [true, 'specialite obligatoire!'] },
-        Societe: { type: String, required: [true, 'societe obligatoire!'] },
-        Titre: { type: String, required: [true, 'titre obligatoire!'] },
-        Sujet: { type: String, required: [true, 'sujet obligatoire!'] },
-        Technologie: { type: String, required: [true, 'technologie obligatoire!'] },
-        Disponibilite: { type: Boolean, default: true },
-
+  {
+    Specialite: { type: String, required: [true, "specialite obligatoire!"] },
+    Societe: { type: String, required: [true, "societe obligatoire!"] },
+    Titre: { type: String, required: [true, "titre obligatoire!"] },
+    Sujet: { type: String, required: [true, "sujet obligatoire!"] },
+    Technologie: { type: String, required: [true, "technologie obligatoire!"] },
+    Disponibilite: { type: Boolean, default: true },
+    dateDebut: {
+      type: String,
     },
-    {
-        timestamps: true, versionKey: false
-    }
+    dateFin: {
+      type: String,
+    },
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+  }
 );
 
 module.exports =
-    mongoose.models.StageEte || mongoose.model('StageEte', StageEteSchema);
+  mongoose.models.StageEte || mongoose.model("StageEte", StageEteSchema);

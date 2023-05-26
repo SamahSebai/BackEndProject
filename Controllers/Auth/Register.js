@@ -7,7 +7,7 @@ exports.register = async (req, res) => {
   try {
     const Found = await Accounts.findOne({ email: req.body.email });
     if (Found !== null) {
-      return res.status(400).send({ message: "E-mail déjà utilisé!" });
+      res.status(400).send({ message: "E-mail déjà utilisé!" });
     } else {
       const salt = bcrypt.genSaltSync(10);
       req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
@@ -43,10 +43,11 @@ exports.register = async (req, res) => {
         const newCv = await new CvModule(emptyCv);
         const savedCv = await newCv.save();
       }
+      console.log(req.body);
+      await Accounts.create(req.body);
       res.status(201).send({ message: "Inscrit avec succés!" });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).send({ message: error.message || "An error occured" });
   }
 };

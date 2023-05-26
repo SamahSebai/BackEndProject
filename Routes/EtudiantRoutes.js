@@ -11,6 +11,7 @@ const {
   FetchEtudiantPublic,
   uploadStudents,
   uploadMultiple,
+  SendMailStudentsPortefolio,
 } = require("../Controllers/Etudiant/EtudiantController");
 const passport = require("passport");
 
@@ -78,5 +79,6 @@ router.post(
   upload.single("students_csv"),
   uploadMultiple
 );
+router.post("/mailportefolio", SendMailStudentsPortefolio);
 
 module.exports = router;

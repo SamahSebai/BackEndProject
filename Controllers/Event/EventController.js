@@ -1,4 +1,5 @@
 const Event = require("../../Models/Event");
+const SaisonUnv = require("../../Models/SaisonUnv");
 
 exports.CreateEvent = async (req, res) => {
   try {
@@ -14,7 +15,21 @@ exports.CreateEvent = async (req, res) => {
 
 exports.FetchEvent = async (req, res) => {
   try {
-    const Result = await Event.find({});
+    let filter = {};
+    const { id } = req.query;
+    if (id) {
+      const saison = await SaisonUnv.findById(id);
+      if (saison) {
+        const { DateDebut, Datefin } = saison;
+        filter = {
+          Date: {
+            $gte: new Date(DateDebut),
+            $lt: new Date(Datefin),
+          },
+        };
+      }
+    }
+    const Result = await Event.find(filter);
 
     res.send(Result);
   } catch (error) {
