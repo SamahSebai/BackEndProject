@@ -39,8 +39,8 @@ exports.FetchAdminById = async (req, res) => {
 exports.UpdateAdmin = async (req, res) => {
 
     try {
-        const salt = bcrypt.genSaltSync(10);
-        req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
+        //const salt = bcrypt.genSaltSync(10);
+        //req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
         const Result = await admins.findByIdAndUpdate(req.params.idadmin, req.body)
 
         const Resultupdate = await admins.findById(req.params.idadmin)

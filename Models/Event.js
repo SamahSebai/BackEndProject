@@ -9,7 +9,7 @@ const EventSchema = new Schema(
         Date: { type: Date, required: [true, 'date obligatoire!'] },
         Moderateur: {
             type: Schema.Types.ObjectId,
-            ref: "Compte",
+            ref: "accounts",
         },
        
     },
