@@ -15,6 +15,7 @@ const {
   GetByEnseig,
   GetByTech,
   getnotif,
+  FetchEtudiantByIdPfe,
 } = require("../Controllers/PFE/PFEController");
 const passport = require("passport");
 
@@ -65,6 +66,12 @@ router.get(
   authRole("Enseignant"),
   ChoisirPFE
 );
+router.get(
+  "/pfe/:idPFE",
+  passport.authenticate("bearer", { session: false }),
+  authRole("Enseignant"),
+  FetchEtudiantByIdPfe
+);
 router.delete(
   "/PFE/:idPFE",
   passport.authenticate("bearer", { session: false }),
@@ -74,25 +81,25 @@ router.delete(
 router.get(
   "/PFEStatPays",
   passport.authenticate("bearer", { session: false }),
-  authRole("Enseignant"),
+  authRole("ADMIN"),
   getByPays
 );
 router.get(
   "/PFEStatSoc",
   passport.authenticate("bearer", { session: false }),
-  authRole("Enseignant"),
+  authRole("ADMIN"),
   GetBySociete
 );
 router.get(
   "/PFEStatEns",
   passport.authenticate("bearer", { session: false }),
-  authRole("Enseignant"),
+  authRole("ADMIN"),
   GetByEnseig
 );
 router.get(
   "/PFEStatTech",
   passport.authenticate("bearer", { session: false }),
-  authRole("Enseignant"),
+  authRole("ADMIN"),
   GetByTech
 );
 router.get(

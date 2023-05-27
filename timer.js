@@ -16,7 +16,6 @@ const {
 // "1,30 * * * * *"
 
 const WorkUpdateSixMonths = () => {
-  // at 00:00 in day N°1 of months 1 and 7
   var task = cron.schedule(
     "* * 1 3,9 *",
     async () => {

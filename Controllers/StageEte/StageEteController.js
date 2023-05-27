@@ -1,100 +1,71 @@
-const StageEte = require('../../Models/StageEte')
+const StageEte = require("../../Models/StageEte");
 
-exports.CreateStageEte = async (req , res)=>{
+exports.CreateStageEte = async (req, res) => {
+  try {
+    const Result = await StageEte.create({
+      etudiantId: req.user._id,
+      ...req.body,
+    });
 
-    try {
-        
-    const Result = await StageEte.create(req.body)
-    
-    res.send(Result)
-    
-    
-    } catch (error) {
-    
-        res.status(500).send(error)
-    }
-    
-    }
+    res.send(Result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
-    exports.FetchStageByStudentId = async (req , res)=>{
+exports.FetchStageByStudentId = async (req, res) => {
+  try {
+    const Result = await StageEte.find({ etudiantId: req.params.idStudent });
 
-        try {
-            
-        const Result = await StageEte.find({ etudiantId : req.params.idStudent})
-        
-        res.send(Result)
-        
-        
-        } catch (error) {
-        
-            res.status(500).send(error)
-        }
-        
-        }
+    res.send(Result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
-exports.FetchStageEte = async (req , res)=>{
+exports.FetchStageEte = async (req, res) => {
+  try {
+    const Result = await StageEte.find({});
 
-try {
-    
-const Result = await StageEte.find({})
+    res.send(Result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
-res.send(Result)
+exports.FetchStageEteById = async (req, res) => {
+  try {
+    const Result = await StageEte.findById(req.params.idStageEte).populate(
+      "stagiaire"
+    );
 
+    res.send(Result);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
-} catch (error) {
+exports.UpdateStageEte = async (req, res) => {
+  try {
+    const Result = await StageEte.findByIdAndUpdate(
+      req.params.idStageEte,
+      req.body
+    );
 
-    res.status(500).send(error)
-}
+    const Resultupdate = await StageEte.findById(req.params.idStageEte);
 
-}
+    res.send(Resultupdate);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 
+exports.DeleteStageEte = async (req, res) => {
+  try {
+    const Result = await StageEte.findByIdAndDelete(req.params.idStageEte);
 
-exports.FetchStageEteById = async (req , res)=>{
-
-    try {
-        
-    const Result = await StageEte.findById(req.params.idStageEte).populate("stagiaire")
-    
-    res.send(Result)
-    
-    
-    } catch (error) {
-    
-        res.status(500).send(error)
-    }
-    
-    }
-
-    exports.UpdateStageEte= async (req , res)=>{
-
-        try {
-            
-        const Result = await StageEte.findByIdAndUpdate(req.params.idStageEte , req.body)
-
-        const Resultupdate = await StageEte.findById(req.params.idStageEte)
-        
-        res.send(Resultupdate)
-        
-        
-        } catch (error) {
-        
-            res.status(500).send(error)
-        }
-        
-        }
-
-
-        exports.DeleteStageEte = async (req , res )=>
-        {
-            try {
-
-                const Result = await StageEte.findByIdAndDelete(req.params.idStageEte) 
-
-                
-                res.status(200).send('StageEte deleted with success')
-            } catch (error) {
-                
-
-                res.status(500).send('error serveur')
-            }
-        }
+    res.status(200).send("StageEte deleted with success");
+  } catch (error) {
+    res.status(500).send("error serveur");
+  }
+};

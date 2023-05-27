@@ -86,72 +86,6 @@ app.use("/Api/V1", Postuler);
 app.use("/Api/V1", Confirm);
 app.use("/Api/V1", Cv);
 app.use("/Api/V1", Invitation);
-
-var CronJob = require("cron").CronJob;
-var job = new CronJob(
-  "* * * * *",
-  async function () {
-    /*let transporter = nodemailer.createTransport({
-            service :"Gmail",
-              auth: {
-                user: "sebaisameh51@gmail.com",
-                pass: "kashplocvadlnwnk" ,
-      
-              },
-            });
-            await transporter.sendMail({
-              from:"sebaisameh51@gmail.com",
-              to: "ahlemtbini28@gmail.com",
-              subject: "notification ",
-              html: `<h1>You will see this message six monthes view link <a href="
-              #">dashbord</a>
-              
-              `
-            })
-            console.log("you will see this msg every six monthes")*/
-  },
-  null,
-  true,
-  "America/Los_Angeles"
-);
-job.start();
-
-var jobDiplome = new CronJob(
-  "* * * * *",
-  async function () {
-    /*let transporter = nodemailer.createTransport({
-            service :"Gmail",
-              auth: {
-                user: "sebaisameh51@gmail.com",
-                pass: "kashplocvadlnwnk" ,
-      
-              },
-            });
-            await transporter.sendMail({
-              from:"sebaisameh51@gmail.com",
-              to: "ahlemtbini28@gmail.com",
-              subject: "notification ",
-              html: `<h1>You will see this message six monthes view link <a href="
-              #">dashbord</a>
-              
-              `
-            })
-            console.log("you should update your profil if you are graduated")*/
-  },
-  null,
-  true,
-  "America/Los_Angeles"
-);
-jobDiplome.start();
-//PORT
-app.listen(PORT, (error) => {
-  if (!error)
-    console.log(
-      "Server is Successfully Running, and App is listening on port " + PORT
-    );
-  else console.log("Error occurred, server can't start", error);
-});
-
 app.use("/Api/V1", Demande);
 
 //PORT
@@ -176,4 +110,3 @@ io.on("connection", (socket) => {
 module.exports = {
   io,
 };
-

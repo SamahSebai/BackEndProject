@@ -67,6 +67,20 @@ exports.FetchPFEaffecte = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
+exports.FetchEtudiantByIdPfe = async (req, res) => {
+  try {
+    const Result = await Etudiant.findById(req.params.idPFE).populate(
+      "Etudiant"
+    );
+    res.send({
+      name: Result.Etudiant.firstName,
+      lastname: Result.Etudiant.lastName,
+    });
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
 exports.ChoisirPFE = async (req, res) => {
   try {
     const EncadrantData = {

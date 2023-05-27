@@ -2,7 +2,7 @@ const Etudiant = require("../../Models/Compte");
 const sendmail = require("../../mailing/mailer");
 const bcrypt = require("bcryptjs");
 const Excel = require("exceljs");
-
+const Cv = require("../../Models/Cv");
 exports.FetchEtudiant = async (req, res) => {
   try {
     const Result = await Etudiant.find({ role: "Etudiant" });
@@ -69,7 +69,10 @@ exports.UpdateEtudiantVisibility = async (req, res) => {
 exports.DeleteEtudiant = async (req, res) => {
   try {
     const Result = await Etudiant.findByIdAndDelete(req.params.idEtudiant);
-
+    const cv = await Cv.findOne({ compte: req.params.idEtudiant });
+    if (cv) {
+      const cv = await Cv.findOneAndDelete({ compte: req.params.idEtudiant });
+    }
     res.status(200).send("Etudiant deleted with success");
   } catch (error) {
     res.status(500).send("error serveur");
@@ -133,6 +136,7 @@ exports.SendMailStudentsPortefolio = async (req, res) => {
       <p> Bonjour  ${student.firstName} ${student.lastName},c'est la fin de semestre!! <br><br>
       N'oubliez pas de mettre à jour vos compétences acquises tout au long du semestre et du portefolio!</p>
       qui va contenir les liens vers les travaux effectués, tout ceci va enrichir votre cv.<br><br>
+      Voila le lien <a href="http://localhost:3000/UpdateCV">Click here</a><br>
       N'hésitez pas à nous contacter si c'est nécessaire<br>
       Cordialement .<br>
       Administration de l'isamm<br>
@@ -154,7 +158,7 @@ exports.SendMailStudentsWork = async (req, res) => {
         student.email,
         `<h1>A propos de votre travail</h1> 
       <p> Bonjour  ${student.firstName} ${student.lastName},six mois sont déja passés<br><br>
-      Voici le lien de l'application <a href:http://localhost:4000/profile>Click here</a></p>
+      Voici le lien de l'application <a href="http://localhost:3000/profile">Click here</a></p>
       pour modifier votre travail
       <br><br>
       N'hésitez pas à nous contacter si c'est nécessaire<br>
