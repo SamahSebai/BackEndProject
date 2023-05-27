@@ -6,10 +6,10 @@ const {
   UpdateUser,
 } = require("../Controllers/Auth/Forget_Reset_password");
 const { login } = require("../Controllers/Auth/Login");
-const { register } = require("../Controllers/Auth/Register");
+const { register, registerAlumni } = require("../Controllers/Auth/Register");
 const authRole = require("../Passport/RoleAllowed");
 const router = express.Router();
-
+router.post("/registerAlumni", registerAlumni);
 router.post("/register", register);
 router.post("/login", login);
 router.get(
