@@ -30,7 +30,7 @@ exports.register = async (req, res) => {
       const newCv = new Cv(emptyCv);
       const createdCv = await newCv.save();
       console.log(req.body);
-      res.status(201).send({ message: "Inscrit avec succés!" });
+      res.status(201).send({ message: "Inscrit avec succés!", id: newAcc._id });
     }
   } catch (error) {
     res.status(500).send({ message: error.message || "An error occurred" });
@@ -43,8 +43,8 @@ exports.registerAlumni = async (req, res) => {
     if (found !== null) {
       return res.status(400).send({ message: "E-mail déjà utilisé!" });
     }
-    const salt = bcrypt.genSaltSync(10);
-    req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
+    // const salt = bcrypt.genSaltSync(10);
+    // req.body.passwordHashed = bcrypt.hashSync(req.body.password, salt);
     console.log(req.body);
     const alumni = await Accounts.create(req.body);
     res.status(201).send(alumni);

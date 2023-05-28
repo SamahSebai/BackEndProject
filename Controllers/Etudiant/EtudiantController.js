@@ -165,7 +165,7 @@ exports.SendMailStudentsWork = async (req, res) => {
       Cordialement .<br>
       Administration de l'isamm<br>
       `,
-        "Mise à jour du portefolio et compétences"
+        "mise a jour du travail"
       );
     }
   } catch (error) {
@@ -182,13 +182,13 @@ exports.SendMailStudentsDiplome = async (req, res) => {
         student.email,
         `<h1>La date d'obtention du diplome</h1> 
       <p> Bonjour  ${student.firstName} ${student.lastName},vous n'avez pas encore spécifié la date de d'obtention du diplome <br><br>
-      Voici le lien de l'application <a href="http://localhost:4000/profile">Click here</a></p>
+      Voici le lien de l'application <a href="http://localhost:3000/profile">Click here</a></p>
       spécifier la date de diplome obtenu <br><br>
       N'hésitez pas à nous contacter si c'est nécessaire<br>
       Cordialement .<br>
       Administration de l'isamm<br>
       `,
-        "Mise à jour du portefolio et compétences"
+        "Mail de diplome"
       );
     }
   } catch (error) {

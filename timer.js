@@ -17,7 +17,7 @@ const {
 
 const WorkUpdateSixMonths = () => {
   var task = cron.schedule(
-    "* * 1 3,9 *",
+    "6 * * * *",
     async () => {
       console.log("UPDATE YOUR WORK");
       await SendMailStudentsWork();
@@ -30,11 +30,11 @@ const WorkUpdateSixMonths = () => {
 };
 
 const MailPortefolio = () => {
-  var task1 = cron.schedule("* * 16 12 *", () => {
+  var task1 = cron.schedule("7 * * * *", () => {
     console.log("mise à jour du portefolio");
     SendMailStudentsPortefolio();
   });
-  var task2 = cron.schedule("* * 13 5 *", () => {
+  var task2 = cron.schedule("8 * * * *", () => {
     console.log("UPDATE YOUR portfolio");
     SendMailStudentsPortefolio();
   });
@@ -43,7 +43,7 @@ const MailPortefolio = () => {
 };
 
 const MailDiplome = () => {
-  var task = cron.schedule("* * 15 7,10 *", () => {
+  var task = cron.schedule("9 * * * *", () => {
     console.log("mise a jour du diplome");
     SendMailStudentsDiplome();
   });
